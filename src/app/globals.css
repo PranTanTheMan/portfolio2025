@@ -7,15 +7,19 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Smooth GIF loop animation */
+.gif-loop {
+  animation: fadeLoop 4s infinite;
+  opacity: 1;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fadeLoop {
+  0%,
+  95%,
+  100% {
+    opacity: 1;
+  }
+  97% {
+    opacity: 0.95;
+  }
 }
