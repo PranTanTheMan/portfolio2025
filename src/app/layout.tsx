@@ -10,12 +10,12 @@ import { ViewTransitions } from "next-view-transitions";
 const satoshi = localFont({
   src: [
     {
-      path: "../fonts/Satoshi-Variable.ttf",
+      path: "../../src/fonts/Satoshi-Variable.ttf",
       weight: "400 700",
       style: "normal",
     },
     {
-      path: "../fonts/Satoshi-VariableItalic.ttf",
+      path: "../../src/fonts/Satoshi-VariableItalic.ttf",
       weight: "400 700",
       style: "italic",
     },
@@ -24,7 +24,7 @@ const satoshi = localFont({
 });
 
 const faktum = localFont({
-  src: "../fonts/Faktum-Regular.otf",
+  src: "../../src/fonts/Faktum-Regular.otf",
   variable: "--font-faktum",
 });
 
