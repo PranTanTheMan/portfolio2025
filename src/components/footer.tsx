@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <>
       <footer className="flex text-sm justify-between mt-20">
-        <p>© {currentYear} prani.dev</p>
+        <p className="font-mono">© {currentYear} prani.dev</p>
         <div className="flex gap-2">
           <Button
             onClick={() => window.open("https://github.com/pranith", "_blank")}

@@ -37,7 +37,7 @@ export default function Home() {
     <>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl tracking-wider flex gap-2">
+          <h1 className="text-3xl tracking-wider flex gap-2 font-mono">
             <TextAnimate
               key={currentGreetingIndex}
               animation="blurInUp"
@@ -46,7 +46,7 @@ export default function Home() {
               {greetings[currentGreetingIndex]}
             </TextAnimate>
           </h1>
-          <h1 className="text-3xl tracking-wider flex gap-2">
+          <h1 className="text-3xl tracking-wider flex gap-2 font-mono">
             Pranith Molakalapalli 👋
           </h1>
           <p className="text-base mt-4 font-mono tracking-wide">
@@ -65,7 +65,7 @@ export default function Home() {
           </p>
         </div>
         <div className="flex mt-10 flex-col gap-2">
-          <h1 className="text-3xl tracking-wider flex gap-2">
+          <h1 className="text-3xl tracking-wider flex gap-2 font-mono">
             i dabble in a few things.
           </h1>
           <p className="text-base mt-4 font-mono tracking-wide leading-loose">
