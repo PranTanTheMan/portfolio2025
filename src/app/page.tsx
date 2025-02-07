@@ -1,6 +1,4 @@
 "use client";
-import Button from "@/components/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TextAnimate } from "@/components/magicui/text-animate";
 import { useEffect, useState } from "react";
 import Link from "@/components/link";
@@ -30,53 +28,58 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentGreetingIndex((prev) => (prev + 1) % greetings.length);
-    }, 3000); // Change greeting every 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <>
-      <div className="max-w-md lg:max-w-2xl mx-auto mt-12 border-2 border-gray-300">
-        <nav className="flex justify-between mb-20">
-          <div className="flex justify-between w-full items-center gap-2">
-            <Avatar className="w-12 h-12">
-              <AvatarImage src="/Pranith.webp" alt="@Pranith" />
-              <AvatarFallback>PM</AvatarFallback>
-            </Avatar>
-            <div className="font-normal flex gap-2 tracking-wider">
-              <Button>{"[P] PROJECTS"}</Button>
-              <Button>{"[D] DATA"}</Button>
-              <Button>{"[R] RESUME"}</Button>
-            </div>
-          </div>
-        </nav>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-3xl tracking-wider flex gap-2">
-              <TextAnimate
-                key={currentGreetingIndex}
-                animation="blurInUp"
-                by="character"
-              >
-                {greetings[currentGreetingIndex]}
-              </TextAnimate>
-            </h1>
-            <h1 className="text-3xl tracking-wider flex gap-2">
-              Pranith Molakalapalli 👋
-            </h1>
-            <p className="text-base mt-8 font-mono tracking-wide">
-              i like{" "}
-              <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                money
-              </Link>
-              . i like to code. i like{" "}
-              <Link href="https://www.youtube.com/watch?v=zdmNssjcOLw">
-                food
-              </Link>
-              .
-            </p>
-          </div>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl tracking-wider flex gap-2">
+            <TextAnimate
+              key={currentGreetingIndex}
+              animation="blurInUp"
+              by="character"
+            >
+              {greetings[currentGreetingIndex]}
+            </TextAnimate>
+          </h1>
+          <h1 className="text-3xl tracking-wider flex gap-2">
+            Pranith Molakalapalli 👋
+          </h1>
+          <p className="text-base mt-4 font-mono tracking-wide">
+            i like{" "}
+            <Link className="font-mono" href="https://venmo.com/u/Prani28">
+              money
+            </Link>
+            . i like to code. i like{" "}
+            <Link
+              className="font-mono"
+              href="https://www.youtube.com/watch?v=zdmNssjcOLw"
+            >
+              food
+            </Link>
+            .
+          </p>
+        </div>
+        <div className="flex mt-10 flex-col gap-2">
+          <h1 className="text-3xl tracking-wider flex gap-2">
+            i dabble in a few things.
+          </h1>
+          <p className="text-base mt-4 font-mono tracking-wide leading-loose">
+            i am a software engineer and a entrepreneur from minneapolis,
+            minnesota. currently a undergrad student at{" "}
+            <Link className="font-mono" href="https://asu.edu">
+              ASU
+            </Link>{" "}
+            studying data science. i'm also building{" "}
+            <Link className="font-mono" href="https://learneffinity.com">
+              Effinity
+            </Link>{" "}
+            and a few other things.
+          </p>
         </div>
       </div>
     </>

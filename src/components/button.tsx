@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 interface ButtonProps {
@@ -18,7 +20,7 @@ export default function Button({ children, className, onClick }: ButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`${className} font-mono flex items-center justify-center text-xs px-2 py-1 bg-button hover:bg-button-hover transition-colors duration-300`}
+      className={`${className} font-mono flex items-center justify-center text-xs px-2 py-1 bg-button hover:bg-button-hover transition-colors duration-300 relative group`}
     >
       {children}
     </button>
