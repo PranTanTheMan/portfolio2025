@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { GitGraphIcon, Clock8, DiscIcon } from "lucide-react";
+import { GitGraphIcon, Clock8 } from "lucide-react";
 
 interface DiscordData {
   data: {
@@ -44,8 +44,103 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [discordData, setDiscordData] = useState<DiscordData | null>(null);
   const [now, setNow] = useState(Date.now());
+  const [wsRetries, setWsRetries] = useState(0);
+  const MAX_RETRIES = 5;
+  const RETRY_DELAY = 3000;
 
   useEffect(() => {
+    const timer = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    let ws: WebSocket | null = null;
+    let heartbeatInterval: NodeJS.Timeout;
+    let reconnectTimeout: NodeJS.Timeout;
+
+    const connectWebSocket = () => {
+      if (wsRetries >= MAX_RETRIES) {
+        console.log("Max WebSocket reconnection attempts reached");
+        return;
+      }
+
+      // Clear any existing connection
+      if (ws) {
+        ws.close();
+        clearInterval(heartbeatInterval);
+      }
+
+      ws = new WebSocket("wss://api.lanyard.rest/socket");
+
+      ws.onopen = () => {
+        console.log("Connected to Lanyard WebSocket");
+        setWsRetries(0); // Reset retry counter on successful connection
+      };
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        switch (data.op) {
+          case 1:
+            const interval = data.d.heartbeat_interval;
+            heartbeatInterval = setInterval(() => {
+              if (ws?.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ op: 3 }));
+              }
+            }, interval);
+
+            if (ws && ws.readyState === WebSocket.OPEN) {
+              ws.send(
+                JSON.stringify({
+                  op: 2,
+                  d: {
+                    subscribe_to_id: process.env
+                      .NEXT_PUBLIC_DISCORD_ID as string,
+                  },
+                })
+              );
+            }
+            break;
+
+          case 0:
+            if (data.t === "INIT_STATE") {
+              console.log("Discord Activities:", data.d.activities);
+              setDiscordData({ data: data.d });
+            } else if (data.t === "PRESENCE_UPDATE") {
+              console.log("Discord Activities Update:", data.d.activities);
+              setDiscordData({ data: data.d });
+            }
+            break;
+        }
+      };
+
+      ws.onerror = (error) => {
+        console.warn("WebSocket error:", error);
+      };
+
+      ws.onclose = (event) => {
+        console.log("WebSocket connection closed:", event.code, event.reason);
+        clearInterval(heartbeatInterval);
+
+        // Attempt to reconnect unless max retries reached
+        if (wsRetries < MAX_RETRIES) {
+          console.log(
+            `Reconnecting in ${RETRY_DELAY}ms... (Attempt ${
+              wsRetries + 1
+            }/${MAX_RETRIES})`
+          );
+          reconnectTimeout = setTimeout(() => {
+            setWsRetries((prev) => prev + 1);
+            connectWebSocket();
+          }, RETRY_DELAY);
+        }
+      };
+    };
+
+    // Initial data fetch
     const fetchData = async () => {
       try {
         const [discordResponse] = await Promise.all([fetch("/api/discord")]);
@@ -64,75 +159,17 @@ export default function Page() {
     };
 
     fetchData();
+    connectWebSocket();
 
-    // Set up WebSocket connection for real-time updates
-    const ws = new WebSocket("wss://api.lanyard.rest/socket");
-    let heartbeatInterval: NodeJS.Timeout;
-
-    ws.onopen = () => {
-      console.log("Connected to Lanyard WebSocket");
-    };
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-
-      switch (data.op) {
-        case 1:
-          const interval = data.d.heartbeat_interval;
-          heartbeatInterval = setInterval(() => {
-            ws.send(JSON.stringify({ op: 3 }));
-          }, interval);
-
-          ws.send(
-            JSON.stringify({
-              op: 2,
-              d: {
-                subscribe_to_id: process.env.NEXT_PUBLIC_DISCORD_ID as string,
-              },
-            })
-          );
-          break;
-
-        case 0: // Events
-          if (data.t === "INIT_STATE") {
-            console.log("Discord Activities:", data.d.activities);
-            setDiscordData({ data: data.d });
-          } else if (data.t === "PRESENCE_UPDATE") {
-            console.log("Discord Activities Update:", data.d.activities);
-            setDiscordData({ data: data.d });
-          }
-          break;
-      }
-    };
-
-    ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
-      setError("Failed to connect to Discord presence updates");
-    };
-
-    ws.onclose = () => {
-      console.log("WebSocket connection closed");
-      if (heartbeatInterval) {
-        clearInterval(heartbeatInterval);
-      }
-    };
-
+    // Cleanup function
     return () => {
-      if (heartbeatInterval) {
-        clearInterval(heartbeatInterval);
+      if (ws) {
+        ws.close();
       }
-      ws.close();
+      clearInterval(heartbeatInterval);
+      clearTimeout(reconnectTimeout);
     };
-  }, []);
-
-  // Add real-time updates for the progress bar
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setNow(Date.now());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+  }, [wsRetries]); // Add wsRetries to dependencies
 
   return (
     <div className="flex flex-col">
@@ -255,7 +292,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-16">
+      {/* <div className="flex flex-col mt-16">
         <h1 className="text-sm font-mono opacity-45">github activity</h1>
         <div className="border border-button-hover mt-2">
           <div className="bg-button">
@@ -278,7 +315,13 @@ export default function Page() {
         <div className="border border-button-hover mt-2">
           <div className="bg-button"></div>
         </div>
-      </div>
+      </div> */}
+      {/* <div className="flex flex-col mt-16">
+        <h1 className="text-sm font-mono opacity-45">coding activity</h1>
+        <div className="mt-2">
+          <WakaTimeCharts />
+        </div>
+      </div> */}
     </div>
   );
 }
