@@ -46,7 +46,7 @@ const createDefaultShortcuts = (
     description: "Go to Data",
   },
   r: {
-    action: () => router.push("/resume"),
+    action: () => router.push("/prani-mola-resume.pdf"),
     description: "Go to Resume",
   },
   p: {
