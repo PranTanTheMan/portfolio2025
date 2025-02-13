@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { GitGraphIcon, Clock8 } from "lucide-react";
-
+import { GitHubStats } from "@/components/gh-chart";
+import GHStat from "@/components/gh-stat";
 interface DiscordData {
   data: {
     discord_user: {
@@ -251,9 +252,9 @@ export default function Page() {
                         activity.timestamps?.start &&
                         activity.timestamps?.end && (
                           <div className="mt-1">
-                            <div className="w-full bg-zinc-500 h-1 overflow-hidden">
+                            <div className="w-full bg-button-hover h-1 overflow-hidden">
                               <div
-                                className="bg-button-hover h-full transition-all duration-1000 ease-linear"
+                                className=" bg-zinc-500 h-full transition-all duration-1000 ease-linear"
                                 style={{
                                   width: `${Math.min(
                                     100,
@@ -292,36 +293,22 @@ export default function Page() {
           </div>
         </div>
       </div>
-      {/* <div className="flex flex-col mt-16">
+      <div className="flex flex-col mt-16">
         <h1 className="text-sm font-mono opacity-45">github activity</h1>
         <div className="border border-button-hover mt-2">
           <div className="bg-button">
-            <div className="flex flex-col gap-y-3 p-3">
-              <div className="flex items-center gap-x-2 opacity-75">
-                <GitGraphIcon className="w-[14px] h-[14px]" />
-                <p className="text-xs font-mono">github repository</p>
-              </div>
-              <div className="text-md font-mono">commit message</div>
-              <div className="flex items-center gap-x-1 opacity-75">
-                <Clock8 className="w-3 h-3" />
-                <p className="text-xs font-mono">69 hours ago</p>
-              </div>
-            </div>
+            <GitHubStats />
           </div>
         </div>
       </div>
       <div className="flex flex-col mt-16">
-        <h1 className="text-sm font-mono opacity-45">github contributions</h1>
+        <h1 className="text-sm font-mono opacity-45">github activity</h1>
         <div className="border border-button-hover mt-2">
-          <div className="bg-button"></div>
+          <div className="bg-button">
+            <GHStat />
+          </div>
         </div>
-      </div> */}
-      {/* <div className="flex flex-col mt-16">
-        <h1 className="text-sm font-mono opacity-45">coding activity</h1>
-        <div className="mt-2">
-          <WakaTimeCharts />
-        </div>
-      </div> */}
+      </div>
     </div>
   );
 }
