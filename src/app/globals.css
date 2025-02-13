@@ -86,3 +86,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.colorpicker-dark {
+  color: rgb(92, 83, 66);
+}
