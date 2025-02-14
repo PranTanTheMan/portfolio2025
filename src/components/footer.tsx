@@ -4,13 +4,13 @@ import React from "react";
 import Button from "./button";
 import { useKeyboardShortcuts } from "@/lib/keyboard-shortcuts";
 
-export default function Footer() {
+export default function Footer({ className }: { className?: string }) {
   const currentYear = new Date().getFullYear();
   useKeyboardShortcuts();
 
   return (
     <>
-      <footer className="flex text-sm justify-between mt-20">
+      <footer className={`flex text-sm justify-between ${className || ""}`}>
         <p className="font-mono">© {currentYear} prani.dev</p>
         <div className="flex gap-2">
           <Button

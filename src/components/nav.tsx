@@ -26,8 +26,8 @@ export default function Nav() {
             <p className="font-mono text-sm">{"[P]"}</p>
           </div>
           <div className="font-normal flex gap-2 tracking-wider">
-            <Link href="/experience">
-              <Button>{"[E] EXPERIENCE"}</Button>
+            <Link href="/sign">
+              <Button>{"[S] SIGN MY PAGE"}</Button>
             </Link>
             <Link href="/data">
               <Button>{"[D] DATA"}</Button>

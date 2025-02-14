@@ -20,11 +20,7 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en">
         <body className={`antialiased`}>
-          <div className="max-w-md lg:max-w-2xl mx-auto mt-20 ">
-            <Nav />
-            {children}
-            <Footer />
-          </div>
+          {children}
           <Analytics />
           <SpeedInsights />
         </body>

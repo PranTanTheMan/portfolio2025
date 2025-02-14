@@ -2,7 +2,8 @@
 import { TextAnimate } from "@/components/magicui/text-animate";
 import { useEffect, useState } from "react";
 import Link from "@/components/link";
-
+import Nav from "@/components/nav";
+import Footer from "@/components/footer";
 export default function Home() {
   const greetings = [
     "Hey, I'm", // English
@@ -34,7 +35,8 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className="max-w-md lg:max-w-2xl mx-auto mt-20 ">
+      <Nav />
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl tracking-wider flex gap-2 font-mono">
@@ -82,6 +84,7 @@ export default function Home() {
           </p>
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }

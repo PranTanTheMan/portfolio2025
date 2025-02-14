@@ -37,9 +37,9 @@ const createDefaultShortcuts = (
     action: () => window.open("mailto:pmolakal@asu.edu", "_blank"),
     description: "Open Email",
   },
-  e: {
-    action: () => router.push("/experience"),
-    description: "Go to Experience",
+  s: {
+    action: () => router.push("/sign"),
+    description: "Go to Sign My Page",
   },
   d: {
     action: () => router.push("/data"),

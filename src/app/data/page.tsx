@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { GitGraphIcon, Clock8 } from "lucide-react";
 import { GitHubStats } from "@/components/gh-chart";
-import GHStat from "@/components/gh-stat";
+import Nav from "@/components/nav";
+import Footer from "@/components/footer";
 interface DiscordData {
   data: {
     discord_user: {
@@ -173,142 +173,138 @@ export default function Page() {
   }, [wsRetries]); // Add wsRetries to dependencies
 
   return (
-    <div className="flex flex-col">
-      <h1 className="text-3xl font-mono">Data of me</h1>
-      <p className="text-base mt-4 font-mono tracking-wide leading-loose">
-        A data collection of various things I've been up to.
-      </p>
-      <div className="flex flex-col mt-16">
-        <h1 className="text-sm font-mono opacity-45">current activity</h1>
-        <div className="border border-button-hover mt-2">
-          <div className="bg-button">
-            {loading ? (
-              <p className="p-3 text-sm font-mono">Loading...</p>
-            ) : error ? (
-              <p className="p-3 text-sm font-mono text-red-500">{error}</p>
-            ) : (
-              <div className="flex flex-col gap-y-3 p-3">
-                <div className="flex items-center gap-x-3 opacity-75">
-                  <div className="flex flex-col">
-                    <p className="text-sm font-mono">
-                      {discordData?.data.discord_user.display_name ||
-                        discordData?.data.discord_user.global_name ||
-                        discordData?.data.discord_user.username}
-                    </p>
-                    <div className="flex items-center gap-x-2">
-                      <div
-                        className={`w-2 h-2 rounded-full ${
-                          discordData?.data.discord_status === "online"
-                            ? "bg-green-500"
-                            : discordData?.data.discord_status === "idle"
-                            ? "bg-yellow-500"
-                            : discordData?.data.discord_status === "dnd"
-                            ? "bg-red-500"
-                            : "bg-gray-500"
-                        }`}
-                      />
-                      <p className="text-xs font-mono opacity-75">
-                        {discordData?.data.discord_status}
+    <div className="max-w-md lg:max-w-2xl mx-auto mt-20 ">
+      <Nav />
+      <div className="flex flex-col">
+        <h1 className="text-3xl font-mono">Data of me</h1>
+        <p className="text-base mt-4 font-mono tracking-wide leading-loose">
+          A data collection of various things I've been up to.
+        </p>
+        <div className="flex flex-col mt-16">
+          <h1 className="text-sm font-mono opacity-45">current activity</h1>
+          <div className="border border-button-hover mt-2">
+            <div className="bg-button">
+              {loading ? (
+                <p className="p-3 text-sm font-mono">Loading...</p>
+              ) : error ? (
+                <p className="p-3 text-sm font-mono text-red-500">{error}</p>
+              ) : (
+                <div className="flex flex-col gap-y-3 p-3">
+                  <div className="flex items-center gap-x-3 opacity-75">
+                    <div className="flex flex-col">
+                      <p className="text-sm font-mono">
+                        {discordData?.data.discord_user.display_name ||
+                          discordData?.data.discord_user.global_name ||
+                          discordData?.data.discord_user.username}
                       </p>
+                      <div className="flex items-center gap-x-2">
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            discordData?.data.discord_status === "online"
+                              ? "bg-green-500"
+                              : discordData?.data.discord_status === "idle"
+                              ? "bg-yellow-500"
+                              : discordData?.data.discord_status === "dnd"
+                              ? "bg-red-500"
+                              : "bg-gray-500"
+                          }`}
+                        />
+                        <p className="text-xs font-mono opacity-75">
+                          {discordData?.data.discord_status}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {discordData?.data.activities.map((activity, index) => (
-                  <div key={index} className="flex items-start gap-x-3 mt-2">
-                    {activity.assets?.large_image && (
-                      <img
-                        src={
-                          activity.name === "Spotify"
-                            ? activity.assets.large_image.replace(
-                                "spotify:",
-                                "https://i.scdn.co/image/"
-                              )
-                            : activity.assets.large_image.startsWith(
-                                "mp:external"
-                              )
-                            ? activity.assets.large_image.replace(
-                                "mp:external",
-                                "https://media.discordapp.net/external"
-                              )
-                            : `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}`
-                        }
-                        alt={activity.assets.large_text || activity.name}
-                        className="w-16 h-16 rounded-md object-cover"
-                      />
-                    )}
-                    <div className="flex flex-col gap-y-1 flex-1">
-                      <div className="text-md font-mono">{activity.name}</div>
-                      {activity.details && (
-                        <p className="text-sm font-mono opacity-75">
-                          {activity.details}
-                        </p>
+                  {discordData?.data.activities.map((activity, index) => (
+                    <div key={index} className="flex items-start gap-x-3 mt-2">
+                      {activity.assets?.large_image && (
+                        <img
+                          src={
+                            activity.name === "Spotify"
+                              ? activity.assets.large_image.replace(
+                                  "spotify:",
+                                  "https://i.scdn.co/image/"
+                                )
+                              : activity.assets.large_image.startsWith(
+                                  "mp:external"
+                                )
+                              ? activity.assets.large_image.replace(
+                                  "mp:external",
+                                  "https://media.discordapp.net/external"
+                                )
+                              : `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}`
+                          }
+                          alt={activity.assets.large_text || activity.name}
+                          className="w-16 h-16 rounded-md object-cover"
+                        />
                       )}
-                      {activity.state && (
-                        <p className="text-sm font-mono opacity-75">
-                          {activity.state}
-                        </p>
-                      )}
-                      {activity.name === "Spotify" &&
-                        activity.timestamps?.start &&
-                        activity.timestamps?.end && (
-                          <div className="mt-1">
-                            <div className="w-full bg-button-hover h-1 overflow-hidden">
-                              <div
-                                className=" bg-zinc-500 h-full transition-all duration-1000 ease-linear"
-                                style={{
-                                  width: `${Math.min(
-                                    100,
-                                    ((now - activity.timestamps.start) /
-                                      (activity.timestamps.end -
-                                        activity.timestamps.start)) *
-                                      100
-                                  )}%`,
-                                }}
-                              />
-                            </div>
-                            <div className="flex justify-between mt-1">
-                              <span className="text-xs font-mono opacity-50">
-                                {formatTime(now - activity.timestamps.start)}
-                              </span>
-                              <span className="text-xs font-mono opacity-50">
-                                {formatTime(
-                                  activity.timestamps.end -
-                                    activity.timestamps.start
-                                )}
-                              </span>
-                            </div>
-                          </div>
-                        )}
-                      {!activity.timestamps?.end &&
-                        activity.timestamps?.start && (
-                          <p className="text-xs font-mono opacity-50">
-                            {formatElapsedTime(activity.timestamps.start)}
+                      <div className="flex flex-col gap-y-1 flex-1">
+                        <div className="text-md font-mono">{activity.name}</div>
+                        {activity.details && (
+                          <p className="text-sm font-mono opacity-75">
+                            {activity.details}
                           </p>
                         )}
+                        {activity.state && (
+                          <p className="text-sm font-mono opacity-75">
+                            {activity.state}
+                          </p>
+                        )}
+                        {activity.name === "Spotify" &&
+                          activity.timestamps?.start &&
+                          activity.timestamps?.end && (
+                            <div className="mt-1">
+                              <div className="w-full bg-button-hover h-1 overflow-hidden">
+                                <div
+                                  className=" bg-zinc-500 h-full transition-all duration-1000 ease-linear"
+                                  style={{
+                                    width: `${Math.min(
+                                      100,
+                                      ((now - activity.timestamps.start) /
+                                        (activity.timestamps.end -
+                                          activity.timestamps.start)) *
+                                        100
+                                    )}%`,
+                                  }}
+                                />
+                              </div>
+                              <div className="flex justify-between mt-1">
+                                <span className="text-xs font-mono opacity-50">
+                                  {formatTime(now - activity.timestamps.start)}
+                                </span>
+                                <span className="text-xs font-mono opacity-50">
+                                  {formatTime(
+                                    activity.timestamps.end -
+                                      activity.timestamps.start
+                                  )}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+                        {!activity.timestamps?.end &&
+                          activity.timestamps?.start && (
+                            <p className="text-xs font-mono opacity-50">
+                              {formatElapsedTime(activity.timestamps.start)}
+                            </p>
+                          )}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col mt-16">
+          <h1 className="text-sm font-mono opacity-45">github activity</h1>
+          <div className="border border-button-hover mt-2">
+            <div className="bg-button">
+              <GitHubStats />
+            </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-16">
-        <h1 className="text-sm font-mono opacity-45">github activity</h1>
-        <div className="border border-button-hover mt-2">
-          <div className="bg-button">
-            <GitHubStats />
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col mt-16">
-        <h1 className="text-sm font-mono opacity-45">github activity</h1>
-        <div className="border border-button-hover mt-2">
-          <div className="bg-button">
-            <GHStat />
-          </div>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }
