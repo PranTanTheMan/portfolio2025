@@ -23,7 +23,7 @@ export default function Nav() {
                 <AvatarFallback>PM</AvatarFallback>
               </Avatar>
             </Link>
-            <p className="font-mono text-sm">{"[P]"}</p>
+            <p className="font-mono text-sm lg:block hidden">{"[P]"}</p>
           </div>
           <div className="font-normal flex gap-2 tracking-wider">
             <Link href="/sign">

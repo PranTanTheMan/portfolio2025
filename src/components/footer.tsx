@@ -10,9 +10,13 @@ export default function Footer({ className }: { className?: string }) {
 
   return (
     <>
-      <footer className={`flex text-sm justify-between ${className || ""}`}>
-        <p className="font-mono">© {currentYear} prani.dev</p>
-        <div className="flex gap-2">
+      <footer
+        className={`flex text-sm justify-between items-center flex-col lg:flex-row ${
+          className || ""
+        }`}
+      >
+        <p className="font-mono lg:mb-0 mb-4">© {currentYear} prani.dev</p>
+        <div className="flex lg:flex-row flex-col gap-2">
           <Button
             onClick={() => window.open("https://github.com/pranith", "_blank")}
           >

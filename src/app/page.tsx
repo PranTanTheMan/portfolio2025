@@ -35,7 +35,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="max-w-md lg:max-w-2xl mx-auto mt-20 ">
+    <div className="max-w-xs lg:max-w-2xl mx-auto mt-20 ">
       <Nav />
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
@@ -84,7 +84,7 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <Footer />
+      <Footer className="my-20" />
     </div>
   );
 }

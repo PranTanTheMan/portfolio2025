@@ -47,20 +47,32 @@ export default function DrawingBoard({
   }, []);
 
   const getCoordinates = (
-    e: React.MouseEvent<HTMLCanvasElement>
+    event:
+      | React.MouseEvent<HTMLCanvasElement>
+      | React.TouchEvent<HTMLCanvasElement>
   ): { x: number; y: number } => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
 
     const rect = canvas.getBoundingClientRect();
+    const clientX =
+      "touches" in event ? event.touches[0].clientX : event.clientX;
+    const clientY =
+      "touches" in event ? event.touches[0].clientY : event.clientY;
+
     return {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: clientX - rect.left,
+      y: clientY - rect.top,
     };
   };
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const { x, y } = getCoordinates(e);
+  const startDrawing = (
+    event:
+      | React.MouseEvent<HTMLCanvasElement>
+      | React.TouchEvent<HTMLCanvasElement>
+  ) => {
+    event.preventDefault(); // Prevent scrolling on touch devices
+    const { x, y } = getCoordinates(event);
     setIsDrawing(true);
     lastPointRef.current = { x, y, color: currentColor, timestamp: Date.now() };
 
@@ -71,10 +83,15 @@ export default function DrawingBoard({
     context.moveTo(x, y);
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const draw = (
+    event:
+      | React.MouseEvent<HTMLCanvasElement>
+      | React.TouchEvent<HTMLCanvasElement>
+  ) => {
+    event.preventDefault(); // Prevent scrolling on touch devices
     if (!isDrawing || !contextRef.current || !lastPointRef.current) return;
 
-    const { x, y } = getCoordinates(e);
+    const { x, y } = getCoordinates(event);
     const context = contextRef.current;
 
     context.strokeStyle = currentColor;
@@ -154,7 +171,12 @@ export default function DrawingBoard({
             onMouseMove={draw}
             onMouseUp={stopDrawing}
             onMouseLeave={stopDrawing}
-            className="cursor-crosshair"
+            onTouchStart={startDrawing}
+            onTouchMove={draw}
+            onTouchEnd={stopDrawing}
+            onTouchCancel={stopDrawing}
+            className="cursor-crosshair touch-none"
+            style={{ touchAction: "none" }}
           />
         </div>
         <div className="p-4 bg-gray-50 flex justify-end">

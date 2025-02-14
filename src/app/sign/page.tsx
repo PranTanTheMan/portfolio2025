@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import dynamic from "next/dynamic";
-import { PenToolIcon } from "lucide-react";
+import { PenToolIcon, X } from "lucide-react";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
 const DrawingBoard = dynamic(() => import("@/components/drawing-board"), {
@@ -38,6 +38,7 @@ function getRandomPosition(): Position {
 
 export default function SignPage() {
   const [showDrawingModal, setShowDrawingModal] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [signatures, setSignatures] = useState<(Signature & Position)[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -85,6 +86,36 @@ export default function SignPage() {
     <div className="relative min-h-screen bg-[#F8F7F2] overflow-hidden select-none p-4 flex flex-col">
       <Nav />
       <div className="flex-grow relative">
+        {/* Welcome Modal */}
+        {showWelcomeModal && (
+          <div className="fixed inset-0 bg-black backdrop-blur-xl bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-[#F8F7F2] rounded-lg p-6 max-w-md w-full relative">
+              <button
+                onClick={() => setShowWelcomeModal(false)}
+                className="absolute top-4 right-3 text-gray-500 hover:text-gray-700"
+                aria-label="Close modal"
+              >
+                <X size={20} />
+              </button>
+              <h2 className="text-2xl font-bold mb-4">WARNING: NSFW</h2>
+              {/* Add your welcome message content here */}
+              <p className="text-gray-600 mb-4">
+                Since people are allowed to sign/draw on this page, there is a
+                chance that some people will draw inappropriate content.{" "}
+                <strong className="underline">I am not</strong> responsible for
+                any inappropriate content on this page, but be aware before
+                viewing and signing.
+              </p>
+              <button
+                onClick={() => setShowWelcomeModal(false)}
+                className="bg-button text-black font-mono px-4 py-2 rounded hover:bg-button-hover transition-colors"
+              >
+                Got it!
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Signatures */}
         {signatures.map((signature) => (
           <div
@@ -125,7 +156,6 @@ export default function SignPage() {
           onClose={() => setShowDrawingModal(false)}
         />
       )}
-      <Footer />
     </div>
   );
 }

@@ -173,7 +173,7 @@ export default function Page() {
   }, [wsRetries]); // Add wsRetries to dependencies
 
   return (
-    <div className="max-w-md lg:max-w-2xl mx-auto mt-20 ">
+    <div className="max-w-xs lg:max-w-2xl mx-auto mt-20 ">
       <Nav />
       <div className="flex flex-col">
         <h1 className="text-3xl font-mono">Data of me</h1>
@@ -304,7 +304,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer className="my-20" />
     </div>
   );
 }
