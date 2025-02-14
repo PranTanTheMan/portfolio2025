@@ -139,19 +139,19 @@ export default function DrawingBoard({
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center">
-      <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
+      <div className="bg-[#F8F7F2] rounded-xl shadow-2xl overflow-hidden">
         <div className="p-4 flex items-center justify-between border-b">
           <div className="flex items-center gap-3">
             <input
               type="color"
               value={currentColor}
               onChange={(e) => setCurrentColor(e.target.value)}
-              className="w-8 h-8 cursor-pointer rounded-full border-2 border-gray-200"
+              className="w-8 h-8 cursor-pointer border-2 border-gray-200"
             />
             <div className="flex gap-2">
               <button
                 onClick={clearCanvas}
-                className="text-xs px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"
+                className="text-xs px-2 py-1 bg-button font-mono rounded hover:bg-button-hover"
               >
                 Clear
               </button>
@@ -182,7 +182,7 @@ export default function DrawingBoard({
         <div className="p-4 bg-gray-50 flex justify-end">
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+            className="px-4 py-2 bg-button text-black font-mono rounded-lg hover:bg-button-hover transition-colors"
           >
             Add to Wall
           </button>
