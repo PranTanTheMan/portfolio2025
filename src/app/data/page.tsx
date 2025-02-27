@@ -205,12 +205,14 @@ export default function Page() {
                               : discordData?.data.discord_status === "idle"
                               ? "bg-yellow-500"
                               : discordData?.data.discord_status === "dnd"
-                              ? "bg-red-500"
+                              ? "bg-green-500"
                               : "bg-gray-500"
                           }`}
                         />
                         <p className="text-xs font-mono opacity-75">
-                          {discordData?.data.discord_status}
+                          {discordData?.data.discord_status === "dnd"
+                            ? "online"
+                            : discordData?.data.discord_status}
                         </p>
                       </div>
                     </div>
