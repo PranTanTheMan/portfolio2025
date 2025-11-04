@@ -13,7 +13,7 @@ type ShortcutMap = {
 };
 
 const createDefaultShortcuts = (
-  router: ReturnType<typeof useTransitionRouter>
+  router: ReturnType<typeof useTransitionRouter>,
 ): ShortcutMap => ({
   g: {
     action: () => window.open("https://github.com/prantantheman", "_blank"),
@@ -37,17 +37,17 @@ const createDefaultShortcuts = (
     action: () => window.open("mailto:pmolakal@asu.edu", "_blank"),
     description: "Open Email",
   },
-  s: {
-    action: () => router.push("/sign"),
-    description: "Go to Sign My Page",
-  },
+  // s: {
+  //   action: () => router.push("/sign"),
+  //   description: "Go to Sign My Page",
+  // },
   d: {
     action: () => router.push("/data"),
     description: "Go to Data",
   },
   r: {
-    action: () => router.push("/prani-mola-resume.pdf"),
-    description: "Go to Resume",
+    action: () => window.open("/Resume.pdf", "_blank"),
+    description: "Open Resume",
   },
   p: {
     action: () => router.push("/"),

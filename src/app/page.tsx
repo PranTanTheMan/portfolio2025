@@ -56,7 +56,11 @@ export default function Home() {
             <Link className="font-mono" href="https://venmo.com/u/Prani28">
               money
             </Link>
-            . i like to code. i like{" "}
+            . i like to{" "}
+            <Link className="font-mono" href="https://github.com/prantantheman">
+              code
+            </Link>
+            . i like{" "}
             <Link
               className="font-mono"
               href="https://www.youtube.com/watch?v=zdmNssjcOLw"
@@ -77,8 +81,8 @@ export default function Home() {
               ASU
             </Link>{" "}
             studying data science. i'm also building{" "}
-            <Link className="font-mono" href="https://learneffinity.com">
-              Effinity
+            <Link className="font-mono" href="https://stonegridusa.com">
+              Stonegrid
             </Link>{" "}
             and a few other things.
           </p>

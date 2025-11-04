@@ -26,13 +26,13 @@ export default function Nav() {
             <p className="font-mono text-sm lg:block hidden">{"[P]"}</p>
           </div>
           <div className="font-normal flex gap-2 tracking-wider">
-            <Link target="_self" href="/sign">
+            {/*<Link target="_self" href="/sign">
               <Button>{"[S] SIGN MY PAGE"}</Button>
-            </Link>
+            </Link>*/}
             <Link target="_self" href="/data">
               <Button>{"[D] DATA"}</Button>
             </Link>
-            <Link target="_blank" href="/prani-mola-resume.pdf">
+            <Link target="_blank" href="/Resume.pdf">
               <Button>{"[R] RESUME"}</Button>
             </Link>
           </div>
