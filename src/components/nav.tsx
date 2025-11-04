@@ -26,9 +26,6 @@ export default function Nav() {
             <p className="font-mono text-sm lg:block hidden">{"[P]"}</p>
           </div>
           <div className="font-normal flex gap-2 tracking-wider">
-            {/*<Link target="_self" href="/sign">
-              <Button>{"[S] SIGN MY PAGE"}</Button>
-            </Link>*/}
             <Link target="_self" href="/data">
               <Button>{"[D] DATA"}</Button>
             </Link>
